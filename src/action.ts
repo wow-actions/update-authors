@@ -4,6 +4,65 @@ import { exec } from 'child_process'
 import mustache from 'mustache'
 
 export namespace Action {
+  export async function run() {
+    try {
+      const context = github.context
+      const options = getOptions()
+      const octokit = getOctokit()
+      const authors = await getAuthors()
+      const lines: string[] = []
+
+      core.debug(JSON.stringify(authors, null, 2))
+
+      mustache.parse(options.template)
+
+      if (options.sort === 'commits') {
+        authors.sort((a, b) => a.commits - b.commits)
+      }
+
+      authors.forEach((author) => {
+        if (options.bots || !author.name.includes('[bot]')) {
+          lines.push(mustache.render(options.template, author))
+        }
+      })
+
+      const content = lines.join('\n')
+      core.debug(`content: \n${content}`)
+
+      const path = options.path
+      const getContent = async () => {
+        try {
+          return octokit.repos.getContent({
+            ...github.context.repo,
+            path,
+          })
+        } catch (err) {
+          return null
+        }
+      }
+
+      const preres = await getContent()
+      const preContent = preres
+        ? Buffer.from(preres.data.content, 'base64').toString()
+        : null
+
+      if (preContent !== content) {
+        await octokit.repos.createOrUpdateFileContents({
+          ...context.repo,
+          path: options.path,
+          content: Buffer.from(lines).toString('base64'),
+          message: options.commit,
+          sha: preres ? preres.data.sha : undefined,
+        })
+      }
+
+      core.info(`Generated: "${options.path}"`)
+    } catch (e) {
+      core.error(e)
+      core.setFailed(e.message)
+    }
+  }
+
   function getOctokit() {
     const token = core.getInput('GITHUB_TOKEN', { required: true })
     return github.getOctokit(token)
@@ -47,56 +106,5 @@ export namespace Action {
         }
       })
     })
-  }
-
-  export async function run() {
-    try {
-      const context = github.context
-      const options = getOptions()
-      const octokit = getOctokit()
-      const authors = await getAuthors()
-      const lines: string[] = []
-
-      core.debug(JSON.stringify(authors, null, 2))
-
-      mustache.parse(options.template)
-
-      if (options.sort === 'commits') {
-        authors.sort((a, b) => a.commits - b.commits)
-      }
-
-      authors.forEach((author) => {
-        if (options.bots || !author.name.includes('[bot]')) {
-          lines.push(mustache.render(options.template, author))
-        }
-      })
-
-      const path = options.path
-      const content = lines.join('\n')
-      const preres = await octokit.repos.getContent({
-        ...github.context.repo,
-        path,
-      })
-      const preContent = preres
-        ? Buffer.from(preres.data.content, 'base64').toString()
-        : null
-
-      core.debug(`content: \n${content}`)
-
-      if (preContent !== content) {
-        await octokit.repos.createOrUpdateFileContents({
-          ...context.repo,
-          path: options.path,
-          content: Buffer.from(lines).toString('base64'),
-          message: options.commit,
-          sha: preres ? preres.data.sha : undefined,
-        })
-      }
-
-      core.info(`Generated: "${options.path}"`)
-    } catch (e) {
-      core.error(e)
-      core.setFailed(e.message)
-    }
   }
 }
