@@ -53,7 +53,7 @@ export namespace Action {
         await octokit.repos.createOrUpdateFileContents({
           ...context.repo,
           path: options.path,
-          content: Buffer.from(lines).toString('base64'),
+          content: Buffer.from(content).toString('base64'),
           message: options.commit,
           sha: preres ? preres.data.sha : undefined,
         })
