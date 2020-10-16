@@ -13,7 +13,7 @@ on:
     branches:
       - master
 jobs:
-  contributors:
+  run:
     runs-on: ubuntu-latest
     steps:
       - uses: bubkoo/update-authors@v1
