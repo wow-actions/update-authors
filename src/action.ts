@@ -12,6 +12,7 @@ export namespace Action {
       const authors = await getAuthors()
       const lines: string[] = []
 
+      core.debug(JSON.stringify(options, null, 2))
       core.debug(JSON.stringify(authors, null, 2))
 
       mustache.parse(options.template)
@@ -27,7 +28,7 @@ export namespace Action {
       })
 
       const content = lines.join('\n')
-      core.debug(`content: \n${content}`)
+      core.debug(`generated content: \n${content}`)
 
       const path = options.path
       const getContent = async () => {
@@ -45,6 +46,8 @@ export namespace Action {
       const preContent = preres
         ? Buffer.from(preres.data.content, 'base64').toString()
         : null
+
+      core.debug(`previous content: ${preContent}`)
 
       if (preContent !== content) {
         await octokit.repos.createOrUpdateFileContents({
