@@ -1,0 +1,34 @@
+name: Update Authors
+description: Automate generate and update AUTHORS.txt for your repository.
+author: bubkoo <bubkoo.wy@gmail.com>
+inputs:
+  GITHUB_TOKEN:
+    description: Your GitHub token for authentication.
+    required: true
+  repo:
+    description: The repository name in form of "userName/repoName".
+    required: false
+  bots:
+    description: Should include bots or not.
+    required: false
+    default: true
+  template:
+    description: Template to render author line.
+    required: false
+    default: '{{ name }} <{{ email }}>'
+  path:
+    description: Path and file name to save the generated AUTHORS.txt.
+    required: false
+    default: AUTHORS
+  commit:
+    description: Commit message of the github action.
+    required: false
+    default: 'chore: update AUTHORS'
+
+runs:
+  using: node12
+  main: dist/index.js
+
+branding:
+  icon: heart
+  color: orange
