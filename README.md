@@ -24,8 +24,9 @@ jobs:
 ## Inputs
 
 - `GITHUB_TOKEN`: Your GitHub token for authentication.
+- `sort`: Sort type(alphabet or commits) of authors. Default `alphabet`.
 - `bots`: Include bots or not. Default `true`.
-- `template`: Template to render author line. Default `'{{ name }} <{{ email }}>'`.
+- `template`: Template to render author line. Support `{{ commits }}`, `{{ name }}`, `{{ email }}` placeholders. Default `'{{ name }} <{{ email }}>'`.
 - `path`: Path and name to save the generated AUTHORS.txt. Default `'AUTHORS'`.
 - `commit`: Commit message on push to repo. Default `'chore: update AUTHORS'`.
 

@@ -5,9 +5,10 @@ inputs:
   GITHUB_TOKEN:
     description: Your GitHub token for authentication.
     required: true
-  repo:
-    description: The repository name in form of "userName/repoName".
+  sort:
+    description: Sort type(alphabet or commits) of authors.
     required: false
+    default: alphabet
   bots:
     description: Should include bots or not.
     required: false

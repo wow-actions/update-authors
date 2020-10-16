@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
+import { exec } from 'child_process'
 import mustache from 'mustache'
 
 export namespace Action {
@@ -10,6 +11,7 @@ export namespace Action {
 
   function getOptions() {
     return {
+      sort: core.getInput('sort') || 'alphabet',
       bots: core.getInput('bots') === 'true',
       template: core.getInput('template') || '{{ name }} <{{ email }}>',
       path: core.getInput('path') || 'AUTHORS',
@@ -17,13 +19,34 @@ export namespace Action {
     }
   }
 
-  function getRepo() {
-    const raw = core.getInput('repo') || ''
-    const parts = raw.split('/')
-    const context = github.context
-    const owner = parts.length === 2 ? parts[0] : context.repo.owner
-    const repo = parts.length === 2 ? parts[1] : context.repo.repo
-    return { owner, repo }
+  function getAuthors(): Promise<
+    {
+      commits: number
+      name: string
+      email: string
+    }[]
+  > {
+    return new Promise((resolve, reject) => {
+      exec('git shortlog -se --all', (err, stdout) => {
+        if (err) {
+          reject(err)
+        } else {
+          const authors = stdout
+            .split(/\n/)
+            .map((line) => line.trim())
+            .filter((line) => line.length > 0)
+            .map((line) => {
+              const parts = line.split(/[\t\s]+/)
+              return {
+                commits: parseInt(parts[0], 10),
+                name: parts[1],
+                email: parts[2].substr(1, parts[2].length - 2),
+              }
+            })
+          resolve(authors)
+        }
+      })
+    })
   }
 
   export async function run() {
@@ -31,17 +54,16 @@ export namespace Action {
       const context = github.context
       const options = getOptions()
       const octokit = getOctokit()
-      const { owner, repo } = getRepo()
-      const { data: authors } = await octokit.migrations.getCommitAuthors({
-        owner,
-        repo,
-      })
-
+      const authors = await getAuthors()
       const lines: string[] = []
 
       core.debug(JSON.stringify(authors, null, 2))
 
       mustache.parse(options.template)
+
+      if (options.sort === 'commits') {
+        authors.sort((a, b) => a.commits - b.commits)
+      }
 
       authors.forEach((author) => {
         if (options.bots || !author.name.includes('[bot]')) {
