@@ -33,7 +33,7 @@ export namespace Action {
       const path = options.path
       const getContent = async () => {
         try {
-          return octokit.repos.getContent({
+          return await octokit.repos.getContent({
             ...github.context.repo,
             path,
           })
