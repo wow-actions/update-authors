@@ -24,7 +24,7 @@ inputs:
   commit:
     description: Commit message of the github action.
     required: false
-    default: 'chore: update AUTHORS'
+    default: 'chore: update AUTHORS [skip ci]'
 
 runs:
   using: node12
