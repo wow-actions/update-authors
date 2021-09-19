@@ -35,7 +35,7 @@ Various inputs are defined to let you configure the action:
 | `GITHUB_TOKEN` | The GitHub token for authentication | N/A |
 | `sort` | Sort type(`'alphabet'` or `'commits'`) of authors | `'alphabet'` |
 | `bots` | Include bots or not | `true` |
-| `template` | Template to render each line of authors. <br> Placeholders `{{ commits }}`, `{{ name }}`, `{{ email }}` are supportted | `'{{ name }} <{{ email }}>'` |
+| `template` | Template to render each line of authors <br> Placeholders `{{commits}}`, `{{name}}`, `{{email}}` are supportted | `'{{name}} <{{email}}>'` |
 | `commit` | Commit message | `'chore: update AUTHORS [skip ci]'` |
 | `path` | Path of the `AUTHORS.txt` file | `'AUTHORS'` |
 
