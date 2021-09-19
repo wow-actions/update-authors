@@ -1,6 +1,6 @@
 # Update Authors
 
-A Github Action to automate generate and update AUTHORS.txt for your repository.
+Automate generate and update AUTHORS.txt for your repository.
 
 ## Usage
 
@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - uses: bubkoo/update-authors@v1
+      - uses: wow-actions/update-authors@v1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
