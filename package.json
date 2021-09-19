@@ -1,6 +1,6 @@
 {
   "name": "update-authors",
-  "description": "A Github Action to automate generate and update AUTHORS.txt for your repository.",
+  "description": "Automatically generate and update AUTHORS.txt for your repository",
   "version": "1.0.1",
   "main": "dist/index.js",
   "files": [

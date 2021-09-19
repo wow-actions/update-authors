@@ -1,5 +1,5 @@
 name: Update Authors
-description: Automate generate and update AUTHORS.txt for your repository.
+description: Automatically generate and update AUTHORS.txt for your repository.
 author: bubkoo <bubkoo.wy@gmail.com>
 inputs:
   GITHUB_TOKEN:

@@ -1,10 +1,10 @@
 # Update Authors
 
-Automate generate and update AUTHORS.txt for your repository.
+Automatically generate and update `AUTHORS.txt` for your repository.
 
 ## Usage
 
-Create a workflow file such as `.github/workflows/authors.yml`:
+Create a workflow file such as `.github/workflows/authors.yml` in your repository:
 
 ```yml
 name: Update Authors
@@ -26,12 +26,18 @@ jobs:
 
 ## Inputs
 
-- `GITHUB_TOKEN`: Your GitHub token for authentication.
-- `sort`: Sort type(alphabet or commits) of authors. Default `alphabet`.
-- `bots`: Include bots or not. Default `true`.
-- `template`: Template to render author line. Support `{{ commits }}`, `{{ name }}`, `{{ email }}` placeholders. Default `'{{ name }} <{{ email }}>'`.
-- `path`: Path and name to save the generated AUTHORS.txt. Default `'AUTHORS'`.
-- `commit`: Commit message on push to repo. Default `'chore: update AUTHORS'`.
+Various inputs are defined to let you configure the action:
+
+> Note: [Workflow command and parameter names are not case-sensitive](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions#about-workflow-commands).
+
+| Name | Description | Default |
+| --- | --- | --- |
+| `GITHUB_TOKEN` | The GitHub token for authentication | N/A |
+| `sort` | Sort type(`'alphabet'` or `'commits'`) of authors | `'alphabet'` |
+| `bots` | Include bots or not | `true` |
+| `template` | Template to render each line of authors. Support `{{ commits }}`, `{{ name }}`, `{{ email }}` placeholders | `'{{ name }} <{{ email }}>'` |
+| `commit` | Commit message | `'chore: update AUTHORS [skip ci]'` |
+| `path` | Path of the `AUTHORS.txt` file | `'AUTHORS'` |
 
 ## License
 
