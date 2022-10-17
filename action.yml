@@ -27,7 +27,7 @@ inputs:
     default: 'chore: update AUTHORS [skip ci]'
 
 runs:
-  using: node12
+  using: node16
   main: dist/index.js
 
 branding:
