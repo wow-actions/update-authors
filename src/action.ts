@@ -38,8 +38,11 @@ function getAuthors(): Promise<
             const parts = line.split(/[\t\s]+/)
             return {
               commits: parseInt(parts[0], 10),
-              name: parts[1],
-              email: parts[2].substr(1, parts[2].length - 2),
+              name: parts.slice(1, parts.length - 1).join(' '),
+              email: parts[parts.length - 1].substring(
+                1,
+                parts[parts.length - 1].length - 1,
+              ),
             }
           })
         resolve(authors)
