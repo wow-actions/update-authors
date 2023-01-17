@@ -1,6 +1,6 @@
 # Update Authors
 
-Automatically generate and update `AUTHORS.txt` for your repository.
+Automatically generate or update `AUTHORS.txt` for your repository.
 
 ## Usage
 
@@ -16,9 +16,7 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+      - uses: actions/checkout@v3
       - uses: wow-actions/update-authors@v1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
