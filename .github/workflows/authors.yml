@@ -9,13 +9,20 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Install
-        run: |
-          yarn
-      - name: Build
-        run: |
-          yarn build
+      - name: ⤵️　Checkout
+        uses: actions/checkout@v3
+
+      - name: 🚧　Install
+        run: yarn install
+
+      - name: 📦　Build
+        run: yarn build
+
+      - name: 🔑　Generate Token
+        uses: wow-actions/use-app-token@v2
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
       - uses: ./
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ env.BOT_TOKEN }}

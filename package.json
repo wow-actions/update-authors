@@ -24,7 +24,7 @@
   },
   "commitlint": {
     "extends": [
-      "@commitlint/config-conventional"
+      "@bubkoo/commitlint-config"
     ]
   },
   "license": "MIT",
@@ -35,33 +35,24 @@
   "contributors": [],
   "repository": "https://github.com/wow-actions/update-authors",
   "dependencies": {
-    "@actions/core": "^1.2.6",
-    "@actions/github": "^5.0.0",
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1",
     "mustache": "^4.0.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "^13.1.0",
-    "@commitlint/config-conventional": "^13.1.0",
-    "@types/mustache": "^4.0.1",
-    "@types/node": "^16.9.1",
-    "@typescript-eslint/eslint-plugin": "^4.18.0",
-    "@typescript-eslint/parser": "^4.18.0",
-    "@vercel/ncc": "^0.31.1",
-    "devmoji": "^2.3.0",
-    "eslint": "^7.22.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-eslint-comments": "^3.2.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-promise": "^5.1.0",
-    "husky": "^7.0.2",
-    "is-ci": "^3.0.0",
-    "lint-staged": "^11.1.2",
+    "@bubkoo/commitlint-config": "^1.0.1",
+    "@bubkoo/eslint-config": "^1.3.0",
+    "@bubkoo/tsconfig": "^1.1.0",
+    "@types/mustache": "^4.2.2",
+    "@types/node": "^18.11.18",
+    "@vercel/ncc": "^0.36.0",
+    "eslint": "^8.32.0",
+    "husky": "^8.0.3",
+    "is-ci": "^3.0.1",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.4.1",
-    "pretty-quick": "^3.1.1",
-    "rimraf": "^3.0.2",
-    "typescript": "^4.4.3"
+    "prettier": "^2.8.3",
+    "pretty-quick": "^3.1.3",
+    "rimraf": "^4.1.0",
+    "typescript": "^4.9.4"
   }
 }
