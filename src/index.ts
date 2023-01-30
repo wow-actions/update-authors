@@ -31,6 +31,7 @@ function getAuthors(): Promise<
       if (err) {
         reject(err)
       } else {
+        core.debug(`raw: ${stdout}`)
         const authors = stdout
           .split(/\n/)
           .map((line) => line.trim())
