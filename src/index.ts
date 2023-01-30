@@ -104,9 +104,8 @@ export async function run() {
         message: options.commit,
         sha: res ? (res.data as any).sha : undefined,
       })
+      core.info(`${oldContent ? 'Updated' : 'Generated'}: "${options.path}"`)
     }
-
-    core.info(`Generated: "${options.path}"`)
   } catch (e) {
     core.error(e)
     core.setFailed(e.message)
